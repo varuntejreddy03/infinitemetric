@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api-brevo/:path*",
+      "destination": "https://api.brevo.com/:path*"
+    }
+  ]
+}
