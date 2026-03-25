@@ -2,6 +2,8 @@ export default async function handler(req, res) {
   // CORS Headers
   const allowedOrigins = [
     'https://infinitemetric.vercel.app',
+    'https://infinitemetric.co.uk',
+    'https://www.infinitemetric.co.uk',
     'http://localhost:5173',
     'http://localhost:3000'
   ]
