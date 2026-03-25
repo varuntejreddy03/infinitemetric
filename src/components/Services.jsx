@@ -1,97 +1,85 @@
 import { motion } from 'framer-motion'
-import { FiArrowUpRight, FiZap, FiTruck, FiGlobe, FiPackage, FiShield } from 'react-icons/fi'
+import { FiArrowRight } from 'react-icons/fi'
 
-const services = [
+const fleet = [
   {
-    icon: <FiZap />,
-    title: 'Fast Delivery',
-    subtitle: 'Same-day collection and delivery for urgent items.',
-    color: 'from-blue-600 to-blue-400',
+    title: 'Parcel Car',
+    label: 'Small parcels & urgent docs',
+    description: 'Rapid urban courier service for time-critical documents, small packages, and same-day deliveries across all major UK cities.',
+    image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800',
   },
   {
-    icon: <FiTruck />,
-    title: 'Versatile Fleet',
-    subtitle: 'From small vans to large trucks for all parcel sizes.',
-    color: 'from-electric to-blue-400',
-  },
-  {
-    icon: <FiShield />,
-    title: 'Secure Handling',
-    subtitle: 'Fully insured and GPS-tracked for your peace of mind.',
-    color: 'from-emerald-600 to-emerald-400',
+    title: 'Logistics Van',
+    label: 'Large packages & boxes',
+    description: 'High-capacity van fleet for larger consignments, multi-drop deliveries, and business-to-business logistics across the United Kingdom.',
+    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800',
   },
 ]
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 bg-white relative overflow-hidden w-full">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,#F8FAFC_0%,transparent_50%)] opacity-100" />
-      {/* The following two divs were part of the original dark mode background and are kept as they are not explicitly removed or replaced by the instruction. */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-electric/[0.05] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-royal/[0.05] rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
-      {/* The original grid background is also kept as it's not explicitly removed. */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-6 sm:mb-8">
-          <div className="max-w-2xl">
-            <span className="text-accent font-black text-[9px] uppercase tracking-[0.4em] mb-4 block">
-                Professional Delivery Solutions
+    <section id="services" className="section-padding bg-surface-light relative">
+      <div className="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div className="flex flex-col mb-20">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-5 py-2 bg-accent/8 border border-accent/15 rounded-full mb-8 w-fit"
+          >
+            <span className="text-accent font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
+              What We Deliver
             </span>
+          </motion.div>
+          
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
             <motion.h2
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tighter leading-tight"
+              className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-text-primary tracking-[-0.03em] leading-[1.1]"
             >
-                Reliable{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-royal via-electric to-blue-600">
-                  Delivery Services
-                </span>
+              One Fleet. <br /> <span className="text-accent">Every Corner of the UK.</span>
             </motion.h2>
+            <p className="text-text-muted text-lg max-w-sm font-medium font-body leading-relaxed">
+              Nationwide reach with a multi-modal fleet designed for high-velocity business demands.
+            </p>
           </div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-slate-500 lg:text-right font-medium max-w-xs"
-          >
-            We provide specialized logistics solutions tailored for your business needs.
-          </motion.p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {fleet.map((vehicle, i) => (
             <motion.div
-              key={service.title}
+              key={vehicle.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative h-[360px] flex flex-col p-8 rounded-[32px] bg-slate-50 border border-slate-100 hover:border-royal/30 transition-smooth overflow-hidden shadow-xl hover:shadow-royal/5"
+              transition={{ delay: i * 0.12 }}
+              className="flex flex-col group h-full card-hover"
             >
-              {/* Background Accent */}
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color}/5 to-transparent rounded-bl-[100px] -mr-4 -mt-4 group-hover:scale-150 transition-transform duration-700`} />
-              
-              <div className="relative z-10 h-full flex flex-col">
-                <div className="w-14 h-14 rounded-2xl bg-white shadow-md flex items-center justify-center text-royal mb-6 group-hover:bg-royal group-hover:text-white transition-all duration-500 border border-slate-100">
-                  {service.icon}
+              <div className="relative h-[260px] rounded-[20px_20px_0_0] overflow-hidden border border-border-subtle border-b-0 shadow-sm">
+                <img 
+                  src={vehicle.image} 
+                  alt={vehicle.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+                />
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/30 to-transparent" />
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 shadow-sm">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-text-primary">{vehicle.label}</span>
                 </div>
-                
-                <h3 className="font-heading font-black text-xl text-slate-900 mb-4 tracking-tight group-hover:text-royal transition-colors">{service.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-auto group-hover:text-slate-700 transition-colors font-medium">{service.subtitle}</p>
-                
-                <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
-                  <div>
-                    <p className="text-slate-300 text-[9px] font-black uppercase tracking-widest mb-1">Service Level</p>
-                    <p className="text-slate-900 font-bold text-xs">Standard Business</p>
-                  </div>
-                  <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center group-hover:bg-royal group-hover:text-white transition-all">
-                    <FiArrowUpRight />
-                  </div>
-                </div>
+              </div>
+
+              <div className="flex flex-col flex-1 p-8 bg-white rounded-[0_0_20px_20px] border border-border-subtle border-t-0">
+                <h3 className="font-heading font-bold text-2xl text-text-primary mb-3 tracking-tight">{vehicle.title}</h3>
+                <p className="text-text-muted text-sm leading-[1.7] mb-8 font-medium font-body">
+                  {vehicle.description}
+                </p>
+                <a 
+                  href="#booking" 
+                  className="mt-auto flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-text-primary hover:text-accent transition-colors duration-300 group-hover:gap-4"
+                >
+                  Book This Service <FiArrowRight className="text-accent" />
+                </a>
               </div>
             </motion.div>
           ))}

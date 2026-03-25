@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiPlus, FiMinus, FiArrowRight, FiChevronDown, FiMail, FiPhone } from 'react-icons/fi'
+import { FiChevronDown, FiArrowRight, FiMessageCircle } from 'react-icons/fi'
 
 const faqs = [
   {
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: 'What size parcels can you deliver?',
-    a: 'We handle everything from small envelopes and documents to large furniture and pallets. Our fleet includes motorcycles, vans, and trucks to accommodate any size requirement.',
+    a: 'We handle everything from small envelopes and documents to large furniture and pallets. Our fleet includes cars and vans to accommodate any size requirement.',
   },
 ]
 
@@ -25,92 +25,90 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
-    <section id="faq" className="py-24 bg-white relative overflow-hidden w-full">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#F1F5F9_0%,transparent_70%)] opacity-100" />
-      
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-block px-4 py-1.5 bg-royal/5 text-royal rounded-full text-[9px] font-black tracking-[0.2em] uppercase mb-6"
-          >
-            Support Center
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-slate-900 mb-6 tracking-tighter"
-          >
-            Common{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-royal via-electric to-blue-600">
-              Questions
-            </span>
-          </motion.h2>
-          <p className="text-slate-500 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed font-medium">
-            Everything you need to know about our premium delivery services and logistics infrastructure.
-          </p>
-        </div>
-
-        {/* Accordion List */}
-        <div className="space-y-4">
-          {faqs.map((item, i) => (
+    <section id="faq" className="bg-white py-24 lg:py-32 relative">
+      <div className="max-w-[1280px] mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          
+          {/* Left Side — Header */}
+          <div className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
             <motion.div
-              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-block px-5 py-2 bg-accent/8 border border-accent/15 rounded-full mb-6"
+            >
+              <span className="text-accent font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
+                Got Questions?
+              </span>
+            </motion.div>
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group border border-slate-100 rounded-[32px] overflow-hidden bg-white hover:border-royal/30 transition-all shadow-sm"
+              className="font-heading font-extrabold text-3xl sm:text-4xl text-text-primary tracking-[-0.03em] mb-5"
             >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full p-6 sm:p-8 flex items-center justify-between text-left outline-none"
-              >
-                <span className={`font-black text-slate-900 text-sm sm:text-base pr-8 tracking-tight transition-colors ${openIndex === i ? 'text-royal' : ''}`}>{item.q}</span>
-                <div className={`w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center shrink-0 transition-all ${openIndex === i ? 'bg-royal text-white rotate-180' : 'text-slate-400 group-hover:text-royal group-hover:bg-royal/5'}`}>
-                  <FiChevronDown />
-                </div>
-              </button>
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 sm:px-8 pb-8">
-                       <div className="w-12 h-1 bg-royal/10 rounded-full mb-6" />
-                       <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
-                         {item.a}
-                       </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
+              Everything You <span className="text-accent">Need to Know.</span>
+            </motion.h2>
+            <p className="text-text-muted text-base leading-relaxed font-body mb-8">
+              Can't find what you're looking for? Get in touch with our team directly.
+            </p>
+            <a
+              href="https://wa.me/447896656811?text=Hi%20Infinite%20Metric%2C%20I%20have%20a%20question."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-[#25D366] text-white rounded-full font-bold text-sm hover:bg-[#20bd5a] transition-all duration-300"
+            >
+              <FiMessageCircle className="text-lg" /> Chat on WhatsApp
+            </a>
+          </div>
 
-        {/* Support CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20 p-10 rounded-[40px] bg-slate-50 border border-slate-100 text-center"
-        >
-          <p className="text-slate-400 font-black text-[10px] uppercase tracking-widest mb-4">Still have questions?</p>
-          <a
-            href="mailto:ops@infinitemetric.com"
-            className="text-slate-900 font-black text-xl hover:text-royal transition-colors flex items-center justify-center gap-3 group"
-          >
-            Connect with our Operations Team <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-          </a>
-        </motion.div>
+          {/* Right Side — Accordion */}
+          <div className="lg:col-span-8 space-y-3">
+            {faqs.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className={`bg-surface-light border rounded-2xl overflow-hidden transition-all duration-300 ${openIndex === i ? 'border-accent/20 shadow-md' : 'border-transparent hover:border-border-subtle'}`}
+              >
+                <button
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  className="w-full p-6 flex items-center justify-between text-left outline-none group"
+                >
+                  <span className={`font-heading font-bold text-base sm:text-lg pr-6 tracking-tight transition-colors duration-300 ${openIndex === i ? 'text-accent' : 'text-text-primary'}`}>
+                    {item.q}
+                  </span>
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                    openIndex === i 
+                      ? 'bg-accent text-white rotate-180' 
+                      : 'bg-white border border-border-subtle text-text-muted group-hover:border-accent/30'
+                  }`}>
+                    <FiChevronDown className="text-sm" />
+                  </div>
+                </button>
+                <AnimatePresence>
+                  {openIndex === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 pt-0">
+                        <p className="text-text-muted text-sm leading-[1.7] font-body">
+                          {item.a}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

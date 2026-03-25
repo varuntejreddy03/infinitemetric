@@ -1,107 +1,91 @@
 import { motion } from 'framer-motion'
-import { FiMousePointer, FiTruck, FiCheckCircle } from 'react-icons/fi'
+import { FiMousePointer, FiTruck, FiCheckCircle, FiArrowRight } from 'react-icons/fi'
 
 const steps = [
   {
-    step: '01',
-    icon: <FiMousePointer className="text-2xl" />,
-    title: 'Book Online',
-    description: 'Enter your delivery details and get an instant price in seconds.',
-    color: 'from-royal via-electric to-blue-400',
+    id: '01',
+    icon: <FiMousePointer className="text-xl" />,
+    title: 'Enter Your Details',
+    description: "Tell us where you're sending from, where it's going, and what size parcel — get a price in seconds.",
   },
   {
-    step: '02',
-    icon: <FiTruck className="text-2xl" />,
-    title: 'We Collect',
-    description: 'Our driver will collect your items within 60 minutes of booking.',
-    color: 'from-electric via-blue-400 to-blue-300',
+    id: '02',
+    icon: <FiTruck className="text-xl" />,
+    title: 'Driver at Your Door',
+    description: "We assign the nearest driver to your pickup. Expect a knock within 60 minutes of booking.",
   },
   {
-    step: '03',
-    icon: <FiCheckCircle className="text-2xl" />,
-    title: 'Safe Delivery',
-    description: 'Your items are delivered safely with real-time tracking and proof.',
-    color: 'from-accent via-orange-500 to-orange-400',
+    id: '03',
+    icon: <FiCheckCircle className="text-xl" />,
+    title: 'Delivered With Proof',
+    description: "Your parcel is tracked live the entire journey. You get digital proof the moment it's delivered.",
   },
 ]
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-6 sm:py-10 bg-white relative overflow-hidden w-full">
-      {/* Background Decor */}
-      <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric/20 to-transparent" />
+    <section id="how-it-works" className="bg-[#0A0A0A] py-24 lg:py-32 relative overflow-hidden">
+      {/* Ambient */}
+      <div className="absolute top-0 left-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2" />
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-8 sm:mb-10"
-        >
-          <span className="inline-block px-3 py-1 bg-royal/5 text-royal rounded-full text-[9px] font-black mb-4 tracking-[0.2em] uppercase">
-            Process
-          </span>
-          <h2 className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 mb-4 tracking-tighter">
-            Our Simple{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-royal via-electric to-blue-600">
-              Steps
+      <div className="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-5 py-2 bg-white/5 border border-white/10 rounded-full mb-6"
+          >
+            <span className="text-accent font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
+              How It Works
             </span>
-          </h2>
-          <p className="text-gray-500 max-w-sm mx-auto text-xs sm:text-sm font-medium">
-            We've streamlined our delivery process for your convenience.
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-heading font-extrabold text-3xl sm:text-4xl text-white tracking-[-0.03em] mb-4"
+          >
+            From Booking to <span className="text-accent">Doorstep in 3 Steps.</span>
+          </motion.h2>
+          <p className="text-white/40 max-w-lg mx-auto text-base leading-relaxed font-body">
+            Simple, fast, and transparent — that's how we operate.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Steps Grid */}
-        <div className="relative">
-          {/* Connector Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[44px] left-[10%] right-[10%] h-[1px]">
-            <div className="w-full h-full border-t border-dashed border-gray-200" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {steps.map((step, i) => (
             <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
+              key={step.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.5 }}
-              className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-royal via-electric to-accent origin-left"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="relative text-center group"
-              >
-                {/* Step Icon & Number */}
-                <div className="relative mx-auto mb-10 w-max">
-                  <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white flex items-center justify-center text-royal shadow-2xl shadow-blue-500/10 group-hover:scale-110 group-hover:shadow-blue-500/20 transition-smooth rotate-3 group-hover:rotate-0`}>
-                    {step.icon}
-                  </div>
-                  <div className="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-gray-100 z-20 group-hover:-translate-y-1 transition-transform">
-                    <span className="text-navy font-black text-xs uppercase tracking-tighter">{step.step}</span>
-                  </div>
+              transition={{ delay: i * 0.12 }}
+              className="relative bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 backdrop-blur-sm hover:bg-white/[0.06] hover:border-accent/20 transition-all duration-400 group"
+            >
+              {/* Step Number */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-11 h-11 rounded-xl bg-accent/15 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
+                  {step.icon}
                 </div>
+                <span className="text-white/10 font-heading font-extrabold text-5xl tracking-tighter">{step.id}</span>
+              </div>
+              
+              <h3 className="font-heading font-bold text-lg text-white mb-3 tracking-tight">
+                {step.title}
+              </h3>
+              <p className="text-white/40 text-sm leading-[1.7] font-body">
+                {step.description}
+              </p>
 
-                {/* Content */}
-                <h3 className="font-heading font-black text-xl text-slate-900 mb-4 tracking-tight group-hover:text-royal transition-colors">{step.title}</h3>
-                <p className="text-gray-500 text-sm sm:text-base leading-relaxed max-w-xs mx-auto font-medium group-hover:text-gray-700 transition-colors">
-                  {step.description}
-                </p>
-
-                {/* Mobile/Tablet Arrow Indicator */}
-                {i < 2 && (
-                  <div className="lg:hidden mt-8 text-royal/20 flex justify-center">
-                    <div className="w-px h-12 bg-gradient-to-b from-royal/20 to-transparent" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
+              {/* Arrow connector */}
+              {i < steps.length - 1 && (
+                <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-accent/20 items-center justify-center">
+                  <FiArrowRight className="text-accent text-xs" />
+                </div>
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,111 +1,144 @@
 import { motion } from 'framer-motion'
-import { FiArrowRight, FiActivity, FiGlobe, FiShield } from 'react-icons/fi'
-import { HiCheckCircle } from 'react-icons/hi'
+import { FiArrowRight, FiMapPin, FiTruck, FiShield, FiClock } from 'react-icons/fi'
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden w-full bg-slate-50">
-      {/* Cinematic Background Infrastructure */}
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden w-full bg-[#0A0A0A]">
+      {/* === BACKGROUND === */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,#FFFFFF_0%,transparent_70%)] opacity-100" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,#EFF6FF_0%,transparent_50%)] opacity-100" />
-        {/* Animated Grid */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]" 
-          style={{ 
-            backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
-            backgroundSize: '100px 100px'
-          }} 
+        <img 
+          src="/hero-dark.png"
+          alt=""
+          className="w-full h-full object-cover opacity-50"
         />
-        {/* Floating Abstract Element */}
-        <motion.div
-          animate={{ 
-            y: [0, -20, 0],
-            rotate: [0, 5, 0]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 right-[-10%] w-[600px] h-[600px] bg-royal/10 rounded-full blur-[120px]"
-        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/95 via-[#0A0A0A]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center pt-20 lg:pt-0 pb-12">
-        {/* Left Column: Command Center */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-electric/10 border border-electric/20 mb-8"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-electric text-[10px] font-black uppercase tracking-[0.3em]">System Active</span>
-          </motion.div>
+      {/* === SUBTLE GRID === */}
+      <div 
+        className="absolute inset-0 z-[1] opacity-[0.03]"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '60px 60px'
+        }}
+      />
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-heading font-black text-5xl sm:text-7xl xl:text-8xl text-slate-900 leading-[0.95] tracking-tight mb-8"
-          >
-            Infinite <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-royal via-electric to-blue-600">
-              Metric Limited.
-            </span>
-          </motion.h1>
+      {/* === AMBIENT GLOW === */}
+      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-accent/8 rounded-full blur-[200px] z-[1]" />
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-slate-500 text-base sm:text-lg lg:text-xl max-w-xl mb-12 leading-relaxed font-medium"
-          >
-            Premium, UK-wide delivery solutions for your business. Reliable, tracked, and professional services you can trust.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
-          >
-            <a
-              href="#booking"
-              className="w-full sm:w-auto px-10 py-4 bg-accent text-white font-black text-sm uppercase tracking-widest rounded-2xl shadow-2xl shadow-accent/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3"
+      {/* === CONTENT === */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16 pt-24 pb-16 sm:pt-32 sm:pb-20 lg:pt-0 lg:pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center min-h-screen">
+          
+          {/* LEFT — HEADLINE + CTA (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col items-start">
+            {/* Company Name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-white tracking-[-0.03em] leading-[0.95] mb-6"
             >
-              Book Now <FiArrowRight />
-            </a>
-            <a
-              href="#services"
-              className="w-full sm:w-auto px-10 py-4 border-2 border-slate-200 bg-white text-slate-900 font-black text-sm uppercase tracking-widest rounded-2xl hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg"
-            >
-              Our Services
-            </a>
-          </motion.div>
-        </div>
+              Infinite{' '}
+              <span className="text-accent">Metric</span>{' '}
+              Limited.
+            </motion.h1>
 
-        {/* Right Column: Mission Card Display */}
-        <div className="hidden lg:block relative">
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="relative"
+            {/* Tagline */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="text-white/45 max-w-[520px] text-lg sm:text-xl leading-[1.7] font-body font-medium mb-12"
+            >
+              Built for businesses that can't afford delays. High-velocity logistics across every corner of the UK.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-start gap-4"
+            >
+              <a
+                href="#booking"
+                className="btn-sheen group h-[58px] px-10 bg-accent text-white flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-[13px] glow-orange hover:scale-[1.03] transition-all duration-400 active:scale-95 whitespace-nowrap"
+              >
+                GET A QUOTE <FiArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" />
+              </a>
+              <a
+                href="#services"
+                className="group h-[58px] px-10 bg-white text-[#0A0A0A] flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-[13px] hover:bg-white/90 transition-all duration-400 whitespace-nowrap"
+              >
+                See Our Fleet
+              </a>
+            </motion.div>
+          </div>
+
+          {/* RIGHT — ABOUT COMPANY (5 cols) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5"
           >
-            {/* Logistics Image Container */}
-            <div className="relative rounded-[48px] overflow-hidden border border-slate-200 shadow-[0_40px_100px_rgba(0,0,0,0.1)] aspect-[4/5] sm:aspect-auto sm:h-[600px] bg-white">
-              <img 
-                src="/premium_logistics_hub_light_1774460682763.png" 
-                alt="Logistics Solutions"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent opacity-60" />
+            <div className="p-8 bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-3xl">
+              {/* About Text */}
+              <p className="text-white/50 text-sm leading-[1.8] font-body font-medium mb-8">
+                Infinite Metric Limited is a UK-based logistics company specialising in same-day and next-day delivery services. From small parcels to heavy haulage, we provide reliable, fully insured, and GPS-tracked courier solutions for businesses and individuals across the United Kingdom.
+              </p>
+
+              {/* Key Points */}
+              <div className="grid grid-cols-2 gap-5">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiMapPin className="text-accent text-sm" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-sm">UK-Wide Coverage</h4>
+                    <p className="text-white/30 text-xs mt-0.5">Every major city and town</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiClock className="text-accent text-sm" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-sm">Same-Day Delivery</h4>
+                    <p className="text-white/30 text-xs mt-0.5">Collection within 60 mins</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiShield className="text-accent text-sm" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-sm">Fully Insured</h4>
+                    <p className="text-white/30 text-xs mt-0.5">Every parcel, every time</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiTruck className="text-accent text-sm" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-sm">Multi-Modal Fleet</h4>
+                    <p className="text-white/30 text-xs mt-0.5">Cars, vans & heavy trucks</p>
+                  </div>
+                </div>
+              </div>
             </div>
-
           </motion.div>
         </div>
       </div>
 
-      {/* Modern Bottom Edge */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+      {/* Dark fade into next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0A0A] to-transparent pointer-events-none z-20" />
     </section>
   )
 }

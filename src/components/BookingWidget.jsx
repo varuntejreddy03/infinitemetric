@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMapPin, FiPackage, FiTruck, FiPhone, FiArrowRight, FiMail, FiMessageSquare, FiCalendar, FiNavigation } from 'react-icons/fi'
+import { FiMapPin, FiPackage, FiTruck, FiPhone, FiArrowRight, FiMail, FiMessageSquare, FiCalendar, FiNavigation, FiShield, FiCheckCircle } from 'react-icons/fi'
 import { HiCheckCircle } from 'react-icons/hi'
 
 export default function BookingWidget() {
@@ -53,13 +53,14 @@ export default function BookingWidget() {
         hour12: true
       })
 
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: [{ name: 'Admin' }],
-          subject: `New Booking Inquiry: ${bookingRef}`,
-          htmlContent: `
+      const senderEmail = import.meta.env.VITE_SENDER_EMAIL || 'noreply@infinitemetric.co.uk'
+      const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'Srujan.konda@infinitemetric.co.uk'
+      
+      const emailPayload = {
+        sender: { name: 'Infinite Metric Website', email: senderEmail },
+        to: [{ name: 'Admin', email: contactEmail }],
+        subject: `New Booking Inquiry: ${bookingRef}`,
+        htmlContent: `
             <div style="background-color: #fcfcfc; padding: 40px 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #000000;">
               <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #000000; padding: 40px;">
                 <h1 style="font-size: 18px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 30px; text-transform: uppercase;">Infinite Metric Dispatch</h1>
@@ -73,7 +74,6 @@ export default function BookingWidget() {
 
                 <div style="margin-bottom: 30px;">
                   <h3 style="font-size: 14px; text-transform: uppercase; font-weight: 900; margin-bottom: 15px; border-left: 3px solid #000000; padding-left: 10px;">1. Customer Details</h3>
-                  <p style="margin: 5px 0; font-size: 14px;"><strong>Name:</strong> ${form.email.split('@')[0]}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Phone:</strong> ${form.phone}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Email:</strong> ${form.email}</p>
                 </div>
@@ -94,7 +94,8 @@ export default function BookingWidget() {
 
                 <div style="margin-bottom: 30px;">
                   <h3 style="font-size: 14px; text-transform: uppercase; font-weight: 900; margin-bottom: 15px; border-left: 3px solid #000000; padding-left: 10px;">4. Shipment Information</h3>
-                  <p style="margin: 5px 0; font-size: 14px;"><strong>Service Type:</strong> ${form.parcelSize} &ndash; ${form.serviceType}</p>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Parcel Size:</strong> ${form.parcelSize}</p>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Service Type:</strong> ${form.serviceType}</p>
                 </div>
 
                 <div style="margin-bottom: 30px; border-top: 1px solid #eee; padding-top: 20px;">
@@ -108,8 +109,31 @@ export default function BookingWidget() {
               </div>
             </div>
           `,
-        }),
-      })
+      }
+
+      let response
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      
+      if (isLocalhost) {
+        // Direct Brevo API call for local dev
+        const apiKey = import.meta.env.VITE_BREVO_API_KEY
+        response = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': apiKey,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(emailPayload),
+        })
+      } else {
+        // Vercel serverless function for production
+        response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(emailPayload),
+        })
+      }
 
       if (response.ok) {
         setSubmitted(true)
@@ -140,248 +164,240 @@ export default function BookingWidget() {
   }
 
   return (
-    <section id="booking" className="relative -mt-16 z-30 px-6 overflow-visible w-full min-h-[400px]">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="max-w-6xl mx-auto"
-      >
-        <div className="relative group">
-          <div className="absolute -inset-[2px] bg-gradient-to-r from-royal via-electric to-orange-500 rounded-[32px] blur sm:opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200" />
-          
-          <div className="relative glass shadow-2xl rounded-[28px] p-1">
-            <div className="bg-white/90 backdrop-blur-2xl rounded-[26px] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12 shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-slate-100">
-              
-              {/* Header */}
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-                <div className="text-left">
-                  <span className="text-royal font-black text-[9px] uppercase tracking-[0.3em] mb-2 block">Enterprise Dispatch Manager</span>
-                  <h2 className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tighter">
-                    Secure a{' '}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-royal via-electric to-blue-600">
-                      Quote
-                    </span>
-                  </h2>
-                </div>
-                <p className="text-slate-400 text-[10px] max-w-[200px] md:text-right font-bold uppercase tracking-widest leading-loose">
-                  Real-time logistical calculating for UK-Wide delivery.
-                </p>
-              </div>
-
-              {submitted && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  className="mb-8 p-8 rounded-[32px] bg-emerald-500/10 border border-emerald-500/20 text-center relative overflow-hidden shadow-2xl shadow-emerald-500/5"
-                >
-                  <div className="relative z-10 flex flex-col items-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-white border border-emerald-100 flex items-center justify-center text-emerald-500 shadow-sm">
-                      <HiCheckCircle className="text-3xl" />
-                    </div>
-                    <div>
-                      <h3 className="text-slate-900 font-black text-xl uppercase tracking-tighter">Quote has been sent</h3>
-                      <p className="text-slate-500 font-bold text-sm">Infinite Metric Limited will get back to you</p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-8 lg:space-y-12 relative">
-                
-                {/* 1. Pickup Section */}
-                <div className="space-y-4 lg:space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-royal/10 flex items-center justify-center text-royal font-black text-xs">1</div>
-                    <span className="text-slate-900 font-black text-xs uppercase tracking-widest">Pickup Dispatch</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-5">
-                    <div className="md:col-span-6 relative space-y-2">
-                      <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Address Line 1</label>
-                      <div className="relative">
-                        <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-royal opacity-40" />
-                        <input
-                          type="text"
-                          placeholder="House No / Street Name"
-                          value={form.pickupAddress}
-                          onChange={(e) => handleChange('pickupAddress', e.target.value)}
-                          className={`w-full h-11 sm:h-14 pl-12 pr-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none ${errors.pickupAddress ? 'border-red-500' : ''}`}
-                        />
-                      </div>
-                    </div>
-                    <div className="md:col-span-3 relative space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Post Code</label>
-                      <input
-                        type="text"
-                        placeholder="W1 1AA"
-                        value={form.pickupPostcode}
-                        onChange={(e) => handleChange('pickupPostcode', e.target.value)}
-                        className={`w-full h-11 sm:h-14 px-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none ${errors.pickupPostcode ? 'border-red-500' : ''}`}
-                      />
-                    </div>
-                    <div className="md:col-span-3 relative space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Pickup Date</label>
-                      <div className="relative">
-                        <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-royal opacity-40" />
-                        <input
-                          type="date"
-                          value={form.pickupDate}
-                          onChange={(e) => handleChange('pickupDate', e.target.value)}
-                          className="w-full h-11 sm:h-14 pl-12 pr-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2. Delivery Section */}
-                <div className="space-y-4 lg:space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-royal/10 flex items-center justify-center text-royal font-black text-xs">2</div>
-                    <span className="text-slate-900 font-black text-xs uppercase tracking-widest">Delivery Terminal</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-5">
-                    <div className="md:col-span-6 relative space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Address Line 1</label>
-                      <div className="relative">
-                        <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-electric opacity-40" />
-                        <input
-                          type="text"
-                          placeholder="Destination Address"
-                          value={form.deliveryAddress}
-                          onChange={(e) => handleChange('deliveryAddress', e.target.value)}
-                          className={`w-full h-11 sm:h-14 pl-12 pr-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none ${errors.deliveryAddress ? 'border-red-500' : ''}`}
-                        />
-                      </div>
-                    </div>
-                    <div className="md:col-span-3 relative space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Post Code</label>
-                      <input
-                        type="text"
-                        placeholder="M1 1AA"
-                        value={form.deliveryPostcode}
-                        onChange={(e) => handleChange('deliveryPostcode', e.target.value)}
-                        className={`w-full h-11 sm:h-14 px-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none ${errors.deliveryPostcode ? 'border-red-500' : ''}`}
-                      />
-                    </div>
-                    <div className="md:col-span-3 relative space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Est. Miles</label>
-                      <div className="relative">
-                        <FiNavigation className="absolute left-4 top-1/2 -translate-y-1/2 text-electric opacity-40" />
-                        <input
-                          type="number"
-                          placeholder="Miles"
-                          value={form.distanceMiles}
-                          onChange={(e) => handleChange('distanceMiles', e.target.value)}
-                          className="w-full h-11 sm:h-14 pl-12 pr-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. Package & Contact */}
-                <div className="pt-10 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Parcel Size</label>
-                    <div className="relative">
-                      <FiPackage className="absolute left-4 top-1/2 -translate-y-1/2 text-royal" />
-                      <select
-                        value={form.parcelSize}
-                        onChange={(e) => handleChange('parcelSize', e.target.value)}
-                        className={`w-full h-11 sm:h-14 pl-12 pr-5 bg-white border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none appearance-none cursor-pointer ${errors.parcelSize ? 'border-red-500' : ''}`}
-                      >
-                        <option value="">Select Size</option>
-                        <option value="small">Small (&lt;5kg)</option>
-                        <option value="medium">Medium (5-20kg)</option>
-                        <option value="large">Large (20-50kg)</option>
-                        <option value="pallet">Pallet Delivery</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Service Level</label>
-                    <div className="relative">
-                      <FiTruck className="absolute left-4 top-1/2 -translate-y-1/2 text-electric" />
-                      <select
-                        value={form.serviceType}
-                        onChange={(e) => handleChange('serviceType', e.target.value)}
-                        className="w-full h-11 sm:h-14 pl-12 pr-5 bg-white border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none appearance-none cursor-pointer"
-                      >
-                        <option value="same-day">Same Day Express</option>
-                        <option value="next-day">Standard Next Day</option>
-                        <option value="international">Worldwide Delivery</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Phone Number</label>
-                    <div className="relative">
-                      <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-royal opacity-40" />
-                      <input
-                        type="tel"
-                        placeholder="+44 7XXX XXXXXX"
-                        value={form.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
-                        className={`w-full h-11 sm:h-14 pl-12 pr-5 bg-white border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none ${errors.phone ? 'border-red-500' : ''}`}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Business Email</label>
-                    <div className="relative">
-                      <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-royal opacity-40" />
-                      <input
-                        type="email"
-                        placeholder="client@company.com"
-                        value={form.email}
-                        onChange={(e) => handleChange('email', e.target.value)}
-                        className={`w-full h-11 sm:h-14 pl-12 pr-5 bg-white border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none ${errors.email ? 'border-red-500' : ''}`}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col lg:flex-row items-center gap-6">
-                  <div className="w-full lg:flex-1 relative group">
-                    <FiMessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                    <input
-                      type="text"
-                      placeholder="Special instructions or cargo details..."
-                      value={form.message}
-                      onChange={(e) => handleChange('message', e.target.value)}
-                      className="w-full h-11 sm:h-14 pl-12 pr-5 bg-slate-50 border border-slate-100 rounded-2xl text-slate-900 text-sm font-bold focus:border-royal transition-all outline-none"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={isSending}
-                    className="w-full lg:w-max h-12 lg:h-14 px-10 bg-orange-500 text-white font-black text-xs uppercase tracking-[0.3em] rounded-2xl shadow-xl shadow-orange-500/20 hover:bg-orange-600 hover:-translate-y-1 transition-all disabled:opacity-50 flex items-center justify-center gap-3 active:scale-95"
-                  >
-                    {isSending ? 'PROCESSING...' : <>GET QUOTE NOW <FiArrowRight /></>}
-                  </button>
-                </div>
-
-              </form>
-
-              {/* Trust Footer */}
-              <div className="mt-12 pt-10 border-t border-slate-100 flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-40">
-                {['FULLY INSURED', 'TRACKED LIVE', '24/7 SUPPORT', 'DATA SECURE'].map(trust => (
-                  <div key={trust} className="flex items-center gap-2">
-                    <div className="w-1 h-1 rounded-full bg-royal" />
-                    <span className="text-slate-900 font-black text-[9px] tracking-widest">{trust}</span>
-                  </div>
-                ))}
-              </div>
-
+    <section id="booking" className="section-padding bg-surface-light relative z-10">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+        <div className="bg-white rounded-[24px] shadow-[0_12px_60px_rgba(0,0,0,0.08)] overflow-hidden border border-border-subtle">
+          <div className="p-4 sm:p-8 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-6 bg-accent rounded-full" />
+              <h2 className="text-[13px] font-bold uppercase tracking-[0.18em] text-text-muted">Instant Delivery Quote</h2>
             </div>
           </div>
+
+          <AnimatePresence>
+            {submitted && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="mx-4 sm:mx-8 mb-6 sm:mb-8 p-6 sm:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-200/60 text-center relative overflow-hidden shadow-lg"
+              >
+                <div className="relative z-10 flex flex-col items-center gap-5">
+                  <div className="w-20 h-20 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+                    <FiCheckCircle className="text-4xl" />
+                  </div>
+                  <div>
+                    <h3 className="text-text-primary font-heading font-extrabold text-2xl tracking-tight mb-2">Quote Has Been Sent!</h3>
+                    <p className="text-text-muted font-medium text-base max-w-md mx-auto leading-relaxed">Thank you for choosing <span className="text-accent font-bold">Infinite Metric Limited</span>. Our team will review your request and contact you shortly with a personalised quote.</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <form onSubmit={handleSubmit} className="p-4 sm:p-8 pt-0 space-y-6 sm:space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {/* Column 1: Locations */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-black text-sm">1</div>
+                  <h3 className="font-heading font-bold text-lg text-text-primary">Pickup & Delivery Locations</h3>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="text"
+                        placeholder="Pickup Street Address"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.pickupAddress ? 'border-red-500' : ''}`}
+                        value={form.pickupAddress}
+                        onChange={(e) => handleChange('pickupAddress', e.target.value)}
+                      />
+                    </div>
+                    <div className="relative group">
+                      <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="text"
+                        placeholder="Pickup Postcode"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.pickupPostcode ? 'border-red-500' : ''}`}
+                        value={form.pickupPostcode}
+                        onChange={(e) => handleChange('pickupPostcode', e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="text"
+                        placeholder="Delivery Street Address"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.deliveryAddress ? 'border-red-500' : ''}`}
+                        value={form.deliveryAddress}
+                        onChange={(e) => handleChange('deliveryAddress', e.target.value)}
+                      />
+                    </div>
+                    <div className="relative group">
+                      <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="text"
+                        placeholder="Delivery Postcode"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.deliveryPostcode ? 'border-red-500' : ''}`}
+                        value={form.deliveryPostcode}
+                        onChange={(e) => handleChange('deliveryPostcode', e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="date"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.pickupDate ? 'border-red-500' : ''}`}
+                        value={form.pickupDate}
+                        onChange={(e) => handleChange('pickupDate', e.target.value)}
+                      />
+                    </div>
+                    <div className="relative group">
+                      <FiNavigation className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="text"
+                        placeholder="Distance in Miles"
+                        className="w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none"
+                        value={form.distanceMiles}
+                        onChange={(e) => handleChange('distanceMiles', e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Column 2: Specifics */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-black text-sm">2</div>
+                  <h3 className="font-heading font-bold text-lg text-text-primary">Parcel & Contact Details</h3>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <FiPackage className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <select
+                        className={`w-full h-12 pl-12 pr-6 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none appearance-none cursor-pointer ${errors.parcelSize ? 'border-red-500' : ''}`}
+                        value={form.parcelSize}
+                        onChange={(e) => handleChange('parcelSize', e.target.value)}
+                      >
+                        <option value="">Choose Parcel Size</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="pallet">Pallet Size</option>
+                      </select>
+                    </div>
+                    <div className="relative group">
+                      <FiShield className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <select
+                        className={`w-full h-12 pl-12 pr-6 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none appearance-none cursor-pointer ${errors.serviceType ? 'border-red-500' : ''}`}
+                        value={form.serviceType}
+                        onChange={(e) => handleChange('serviceType', e.target.value)}
+                      >
+                        <option value="">Select Service Type</option>
+                        <option value="express">Same-Day Express</option>
+                        <option value="standard">Standard Next-Day</option>
+                        <option value="economy">Economy 48-Hour</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="tel"
+                        placeholder="Your Contact Number"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.phone ? 'border-red-500' : ''}`}
+                        value={form.phone}
+                        onChange={(e) => handleChange('phone', e.target.value)}
+                      />
+                    </div>
+                    <div className="relative group">
+                      <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="email"
+                        placeholder="Business Email Address"
+                        className={`w-full h-12 pl-12 pr-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.email ? 'border-red-500' : ''}`}
+                        value={form.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="relative group">
+                    <FiMessageSquare className="absolute left-4 top-6 text-accent text-lg z-10" />
+                    <textarea
+                      placeholder="Any special handling notes or cargo info?"
+                      className="w-full h-24 pl-12 pr-4 py-4 bg-[#F4F3F1] border border-[#E0DEDB] rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none resize-none"
+                      value={form.message}
+                      onChange={(e) => handleChange('message', e.target.value)}
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-6 pt-6 border-t border-border-subtle">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[10px] font-bold uppercase tracking-[0.15em] text-text-muted">
+                <span>+ FULLY INSURED</span>
+                <span className="opacity-40">&middot;</span>
+                <span>+ TRACKED LIVE</span>
+                <span className="opacity-40">&middot;</span>
+                <span>+ 24/7 SUPPORT</span>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="btn-sheen w-full sm:flex-1 h-14 bg-accent text-white rounded-2xl font-bold uppercase tracking-[0.1em] text-sm glow-orange hover:scale-[1.02] active:scale-95 transition-all duration-400 flex items-center justify-center gap-3"
+                >
+                  {isSending ? 'SENDING...' : (
+                    <>SEND QUOTE REQUEST <FiArrowRight className="text-lg" /></>
+                  )}
+                </button>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const msg = [
+                      `📦 *New Delivery Quote Request*`,
+                      ``,
+                      `*Pickup:* ${form.pickupAddress || 'N/A'}, ${form.pickupPostcode || 'N/A'}`,
+                      `*Delivery:* ${form.deliveryAddress || 'N/A'}, ${form.deliveryPostcode || 'N/A'}`,
+                      `*Date:* ${form.date || 'N/A'}`,
+                      `*Distance:* ${form.distanceMiles ? form.distanceMiles + ' miles' : 'N/A'}`,
+                      `*Parcel Size:* ${form.parcelSize || 'N/A'}`,
+                      `*Service:* ${form.serviceType || 'N/A'}`,
+                      `*Phone:* ${form.phone || 'N/A'}`,
+                      `*Email:* ${form.email || 'N/A'}`,
+                      form.message ? `*Notes:* ${form.message}` : '',
+                    ].filter(Boolean).join('%0a')
+                    window.open(`https://wa.me/447896656811?text=${encodeURIComponent(msg)}`, '_blank')
+                  }}
+                  className="w-full sm:w-auto h-14 px-8 bg-[#25D366] text-white rounded-2xl font-bold uppercase tracking-[0.1em] text-sm hover:bg-[#20bd5a] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 whitespace-nowrap"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WHATSAPP
+                </a>
+              </div>
+            </div>
+          </form>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }
