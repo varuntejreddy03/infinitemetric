@@ -6,13 +6,13 @@ const fleet = [
     title: 'Parcel Car',
     label: 'Small parcels & urgent docs',
     description: 'Rapid urban courier service for time-critical documents, small packages, and same-day deliveries across all major UK cities.',
-    image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800',
+    image: '/WhatsApp%20Image%202026-03-26%20at%206.13.28%20PM.jpeg',
   },
   {
     title: 'Logistics Van',
     label: 'Large packages & boxes',
     description: 'High-capacity van fleet for larger consignments, multi-drop deliveries, and business-to-business logistics across the United Kingdom.',
-    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800',
+    image: '/white-small-clean-delivery-truck-260nw-2455605559.webp',
   },
 ]
 

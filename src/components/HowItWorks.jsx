@@ -34,9 +34,9 @@ export default function HowItWorks() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block px-5 py-2 bg-white/5 border border-white/10 rounded-full mb-6"
+            className="inline-block px-5 py-2 bg-white/5 border border-white/20 rounded-full mb-6"
           >
-            <span className="text-accent font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
+            <span className="text-white font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
               How It Works
             </span>
           </motion.div>
@@ -46,7 +46,7 @@ export default function HowItWorks() {
             viewport={{ once: true }}
             className="font-heading font-extrabold text-3xl sm:text-4xl text-white tracking-[-0.03em] mb-4"
           >
-            From Booking to <span className="text-accent">Doorstep in 3 Steps.</span>
+            From Booking to <span className="text-white">Doorstep in 3 Steps.</span>
           </motion.h2>
           <p className="text-white/40 max-w-lg mx-auto text-base leading-relaxed font-body">
             Simple, fast, and transparent — that's how we operate.
@@ -61,11 +61,11 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.12 }}
-              className="relative bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 backdrop-blur-sm hover:bg-white/[0.06] hover:border-accent/20 transition-all duration-400 group"
+              className="relative bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 backdrop-blur-sm hover:bg-white/[0.06] hover:border-white/25 transition-all duration-400 group"
             >
               {/* Step Number */}
               <div className="flex items-center justify-between mb-6">
-                <div className="w-11 h-11 rounded-xl bg-accent/15 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
+                <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/25 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
                   {step.icon}
                 </div>
                 <span className="text-white/10 font-heading font-extrabold text-5xl tracking-tighter">{step.id}</span>
@@ -80,8 +80,8 @@ export default function HowItWorks() {
 
               {/* Arrow connector */}
               {i < steps.length - 1 && (
-                <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-accent/20 items-center justify-center">
-                  <FiArrowRight className="text-accent text-xs" />
+                <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white/15 border border-white/30 items-center justify-center">
+                  <FiArrowRight className="text-white text-xs" />
                 </div>
               )}
             </motion.div>

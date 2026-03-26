@@ -54,6 +54,7 @@ export default function Navbar() {
                   src="/logo.png" 
                   alt="Infinite Metric"
                   className="h-9 sm:h-11 lg:h-14 w-auto object-contain"
+                  style={{ filter: 'grayscale(1) contrast(1.1) brightness(0.15)' }}
                 />
               </button>
 
@@ -110,7 +111,7 @@ export default function Navbar() {
               
               <a
                 href="#booking"
-                className="btn-sheen group px-7 py-3 font-bold text-[11px] uppercase tracking-[0.12em] rounded-full transition-all duration-500 active:scale-95 flex items-center gap-2.5 bg-accent text-white hover:scale-[1.03] glow-orange"
+                className="btn-sheen group px-7 py-3 font-bold text-[11px] uppercase tracking-[0.12em] rounded-full transition-all duration-500 active:scale-95 flex items-center gap-2.5 bg-white text-black border border-black/15 hover:bg-white/90 hover:scale-[1.03] glow-orange"
               >
                 GET A QUOTE <FiArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
               </a>
@@ -166,7 +167,7 @@ export default function Navbar() {
                 <FiPhone className="text-accent text-lg" />
                 <span className="text-base font-bold tracking-tight">+44 7896 656811</span>
               </a>
-              <a href="#booking" onClick={() => setMobileOpen(false)} className="btn-sheen w-full py-4 bg-accent text-white flex items-center justify-center gap-3 rounded-2xl font-bold uppercase tracking-[0.1em] text-sm glow-orange active:scale-95 transition-all">
+              <a href="#booking" onClick={() => setMobileOpen(false)} className="btn-sheen w-full py-4 bg-white text-black border border-black/15 flex items-center justify-center gap-3 rounded-2xl font-bold uppercase tracking-[0.1em] text-sm glow-orange active:scale-95 transition-all">
                 GET A QUOTE <FiArrowRight />
               </a>
             </motion.div>

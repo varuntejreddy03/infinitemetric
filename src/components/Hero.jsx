@@ -41,7 +41,7 @@ export default function Hero() {
               className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-white tracking-[-0.03em] leading-[0.95] mb-6"
             >
               Infinite{' '}
-              <span className="text-accent">Metric</span>{' '}
+              <span className="text-white">Metric</span>{' '}
               Limited.
             </motion.h1>
 
@@ -64,7 +64,7 @@ export default function Hero() {
             >
               <a
                 href="#booking"
-                className="btn-sheen group h-[58px] px-10 bg-accent text-white flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-[13px] glow-orange hover:scale-[1.03] transition-all duration-400 active:scale-95 whitespace-nowrap"
+                className="btn-sheen group h-[58px] px-10 bg-white text-black border border-white/60 flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-[13px] glow-orange hover:bg-white/90 hover:scale-[1.03] transition-all duration-400 active:scale-95 whitespace-nowrap"
               >
                 GET A QUOTE <FiArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" />
               </a>
@@ -93,8 +93,8 @@ export default function Hero() {
               {/* Key Points */}
               <div className="grid grid-cols-2 gap-5">
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <FiMapPin className="text-accent text-sm" />
+                  <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiMapPin className="text-white text-sm" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold text-sm">UK-Wide Coverage</h4>
@@ -103,8 +103,8 @@ export default function Hero() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <FiClock className="text-accent text-sm" />
+                  <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiClock className="text-white text-sm" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold text-sm">Same-Day Delivery</h4>
@@ -113,8 +113,8 @@ export default function Hero() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <FiShield className="text-accent text-sm" />
+                  <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiShield className="text-white text-sm" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold text-sm">Fully Insured</h4>
@@ -123,8 +123,8 @@ export default function Hero() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <FiTruck className="text-accent text-sm" />
+                  <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <FiTruck className="text-white text-sm" />
                   </div>
                   <div>
                     <h4 className="text-white font-semibold text-sm">Multi-Modal Fleet</h4>

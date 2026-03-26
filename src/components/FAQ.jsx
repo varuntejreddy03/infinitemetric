@@ -56,7 +56,8 @@ export default function FAQ() {
               href="https://wa.me/447896656811?text=Hi%20Infinite%20Metric%2C%20I%20have%20a%20question."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-6 py-3 bg-[#25D366] text-white rounded-full font-bold text-sm hover:bg-[#20bd5a] transition-all duration-300"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-accent text-white rounded-full font-bold text-sm hover:bg-black transition-all duration-300"
+              style={{ color: '#FFFFFF' }}
             >
               <FiMessageCircle className="text-lg" /> Chat on WhatsApp
             </a>

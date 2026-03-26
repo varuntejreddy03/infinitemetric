@@ -2,8 +2,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #FF6B1A;
-  --color-accent-warm: #FF8C42;
+  --color-accent: #111111;
+  --color-accent-warm: #000000;
   --color-deep: #0A0A0A;
   --color-navy: #0B1D3A;
   --color-surface-dark: #111111;
@@ -33,7 +33,7 @@ section { position: relative; width: 100%; overflow: visible; }
 /* === PREMIUM SCROLLBAR === */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0A0A0A; }
-::-webkit-scrollbar-thumb { background: #FF6B1A; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #111111; border-radius: 3px; }
 
 /* === PREMIUM BUTTON SHEEN === */
 .btn-sheen {
@@ -52,18 +52,18 @@ section { position: relative; width: 100%; overflow: visible; }
   transform: translateX(100%);
 }
 
-/* === ORANGE GLOW EFFECT === */
+/* === ACCENT GLOW EFFECT === */
 .glow-orange {
-  box-shadow: 0 8px 30px rgba(255, 107, 26, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
 }
 .glow-orange-hover:hover {
-  box-shadow: 0 12px 40px rgba(255, 107, 26, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 /* === PREMIUM FOCUS STATES === */
 input:focus, select:focus, textarea:focus {
-  border-color: #FF6B1A !important;
-  box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.1) !important;
+  border-color: #111111 !important;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.12) !important;
   outline: none !important;
 }
 

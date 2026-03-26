@@ -24,7 +24,7 @@ export default function Footer() {
             <h3 style={{ color: '#FFFFFF' }} className="font-heading font-extrabold text-xl tracking-tight">Need a delivery today?</h3>
             <p style={{ color: 'rgba(255,255,255,0.5)' }} className="text-sm font-body mt-1">Get an instant quote in under 30 seconds.</p>
           </div>
-          <a href="#booking" className="btn-sheen h-12 px-8 bg-accent text-white flex items-center gap-2.5 rounded-full font-bold text-sm uppercase tracking-[0.1em] glow-orange hover:scale-[1.03] transition-all active:scale-95 whitespace-nowrap">
+          <a href="#booking" className="btn-sheen h-12 px-8 bg-white text-black border border-white/70 flex items-center gap-2.5 rounded-full font-bold text-sm uppercase tracking-[0.1em] glow-orange hover:bg-white/90 hover:scale-[1.03] transition-all active:scale-95 whitespace-nowrap">
             GET A QUOTE <FiArrowRight className="text-sm" />
           </a>
         </div>
@@ -80,7 +80,7 @@ export default function Footer() {
               </div>
               <div>
                 <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-[10px] font-bold uppercase tracking-[0.15em] block mb-1.5">Email</span>
-                <a href="mailto:Srujan.konda@infinitemetric.co.uk" style={{ color: '#FFFFFF' }} className="hover:text-accent text-sm font-semibold transition-colors break-all">Srujan.konda@infinitemetric.co.uk</a>
+                <a href="mailto:srujan.konda@infinitemetric.co.uk" style={{ color: '#FFFFFF' }} className="hover:text-accent text-sm font-semibold transition-colors break-all">srujan.konda@infinitemetric.co.uk</a>
               </div>
               <div>
                 <span style={{ color: 'rgba(255,255,255,0.4)' }} className="text-[10px] font-bold uppercase tracking-[0.15em] block mb-1.5">Office</span>

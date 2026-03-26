@@ -14,13 +14,13 @@ export default function CTABanner() {
           viewport={{ once: true }}
         >
           <div className="inline-block px-5 py-2 bg-white/5 border border-white/8 rounded-full mb-8">
-            <span className="text-white/50 font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
+            <span className="text-white font-bold text-[11px] uppercase tracking-[0.2em] block leading-none">
               Start Your First Delivery
             </span>
           </div>
           
           <h2 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white mb-6 tracking-[-0.03em] leading-tight">
-            Ready to Ship <span className="text-accent">at the Speed of Business?</span>
+            Ready to Ship <span className="text-white">at the Speed of Business?</span>
           </h2>
           
           <p className="text-white/40 text-base sm:text-lg max-w-lg mx-auto mb-12 font-body leading-relaxed">
@@ -30,7 +30,7 @@ export default function CTABanner() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#booking"
-              className="btn-sheen group h-14 px-10 bg-accent text-white flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-sm glow-orange hover:scale-[1.03] transition-all duration-400 active:scale-95"
+              className="btn-sheen group h-14 px-10 bg-white text-black border border-white/60 flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-sm glow-orange hover:bg-white/90 hover:scale-[1.03] transition-all duration-400 active:scale-95"
             >
               START MY DELIVERY <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
             </a>
@@ -39,7 +39,7 @@ export default function CTABanner() {
               className="group h-14 px-10 flex items-center justify-center gap-3 rounded-full font-bold uppercase tracking-[0.1em] text-sm hover:text-accent transition-all duration-400"
               style={{ border: '2px solid rgba(255,255,255,0.3)', color: '#FFFFFF' }}
             >
-              <FiPhone className="text-accent" /> CALL US
+              <FiPhone className="text-white" /> CALL US +44 7896 656811
             </a>
           </div>
         </motion.div>
