@@ -97,24 +97,12 @@ input:-webkit-autofill:active {
 
 .booking-date-input {
   color-scheme: light;
-  -webkit-appearance: none;
-  appearance: none;
-  line-height: 1.2;
+  -webkit-appearance: auto;
+  appearance: auto;
 }
 
 .booking-date-input::-webkit-calendar-picker-indicator {
   cursor: pointer;
-}
-
-.booking-date-input::-webkit-date-and-time-value {
-  text-align: left;
-}
-
-.booking-date-input::-webkit-datetime-edit,
-.booking-date-input::-webkit-datetime-edit-year-field,
-.booking-date-input::-webkit-datetime-edit-month-field,
-.booking-date-input::-webkit-datetime-edit-day-field {
-  padding: 0;
 }
 
 /* === SUBTLE CARD HOVER === */

@@ -214,6 +214,12 @@ export default function BookingWidget() {
   }
 
   const handleChange = (field, value) => {
+    if (field === 'pickupDate' && value && value < minPickupDate) {
+      setErrors((prev) => ({ ...prev, pickupDate: 'Choose today or later' }))
+      setForm((prev) => ({ ...prev, pickupDate: '' }))
+      return
+    }
+
     setForm((prev) => ({ ...prev, [field]: value }))
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }))
   }
@@ -310,11 +316,6 @@ export default function BookingWidget() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative group">
                       <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10 pointer-events-none" />
-                      {!form.pickupDate && (
-                        <span className="absolute left-12 right-12 top-1/2 -translate-y-1/2 text-text-muted text-sm font-medium pointer-events-none z-10">
-                          Pickup Date (Optional)
-                        </span>
-                      )}
                       <input
                         id="pickup-date"
                         type="date"
@@ -324,6 +325,11 @@ export default function BookingWidget() {
                         value={form.pickupDate || ''}
                         onChange={(e) => handleChange('pickupDate', e.target.value)}
                       />
+                      {!form.pickupDate && (
+                        <span className="absolute left-12 top-1/2 -translate-y-1/2 text-text-muted text-sm font-medium pointer-events-none z-10">
+                          Pickup Date (Optional)
+                        </span>
+                      )}
                     </div>
                     <div className="relative group">
                       <FiNavigation className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
