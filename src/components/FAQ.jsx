@@ -53,7 +53,7 @@ export default function FAQ() {
               Can't find what you're looking for? Get in touch with our team directly.
             </p>
             <a
-              href="https://wa.me/447896656811?text=Hi%20Infinite%20Metric%2C%20I%20have%20a%20question."
+              href="https://wa.me/447896656811?text=Hi%20Infinite%20Metric%20Logistics%2C%20I%20have%20a%20question."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-6 py-3 bg-accent text-white rounded-full font-bold text-sm hover:bg-black transition-all duration-300"

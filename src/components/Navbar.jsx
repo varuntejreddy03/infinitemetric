@@ -52,7 +52,7 @@ export default function Navbar() {
               >
                 <img 
                   src="/logo.png" 
-                  alt="Infinite Metric"
+                  alt="Infinite Metric Logistics"
                   className="h-9 sm:h-11 lg:h-14 w-auto object-contain"
                   style={{ filter: 'grayscale(1) contrast(1.1) brightness(0.15)' }}
                 />

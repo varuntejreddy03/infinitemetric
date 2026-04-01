@@ -42,7 +42,7 @@ export default function Hero() {
             >
               Infinite{' '}
               <span className="text-white">Metric</span>{' '}
-              Limited.
+              Logistics.
             </motion.h1>
 
             {/* Tagline */}
@@ -52,7 +52,7 @@ export default function Hero() {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-white/45 max-w-[520px] text-lg sm:text-xl leading-[1.7] font-body font-medium mb-12"
             >
-              Built for businesses that can't afford delays. High-velocity logistics across every corner of the UK.
+              Nationwide reach with a multi-modal fleet designed for high-velocity business demands.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -87,7 +87,7 @@ export default function Hero() {
             <div className="p-8 bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-3xl">
               {/* About Text */}
               <p className="text-white/50 text-sm leading-[1.8] font-body font-medium mb-8">
-                Infinite Metric Limited is a UK-based logistics company specialising in same-day and next-day delivery services. From small parcels to heavy haulage, we provide reliable, fully insured, and GPS-tracked courier solutions for businesses and individuals across the United Kingdom.
+                Infinite Metric Logistics is a UK-based logistics company specialising in same-day and next-day delivery services. From small parcels to heavy haulage, we provide reliable, fully insured, and GPS-tracked courier solutions for businesses and individuals across the United Kingdom.
               </p>
 
               {/* Key Points */}
@@ -128,7 +128,7 @@ export default function Hero() {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold text-sm">Multi-Modal Fleet</h4>
-                    <p className="text-white/30 text-xs mt-0.5">Cars, vans & heavy trucks</p>
+                    <p className="text-white/30 text-xs mt-0.5">Small cars, Small vans & heavy trucks</p>
                   </div>
                 </div>
               </div>

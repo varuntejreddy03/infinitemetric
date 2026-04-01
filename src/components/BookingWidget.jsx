@@ -50,7 +50,7 @@ export default function BookingWidget() {
 
   const buildWhatsAppMessage = (bookingRef, submittedDate) => {
     return [
-      '*Infinite Metric Limited - New Booking Enquiry*',
+      '*Infinite Metric Logistics - New Booking Enquiry*',
       '',
       `*Booking Reference:* ${bookingRef}`,
       `*Submitted:* ${submittedDate}`,
@@ -82,7 +82,11 @@ export default function BookingWidget() {
     const newErrors = {}
     if (!form.pickupAddress.trim()) newErrors.pickupAddress = 'Required'
     if (!form.pickupPostcode.trim()) newErrors.pickupPostcode = 'Required'
-    if (form.pickupDate && form.pickupDate < minPickupDate) newErrors.pickupDate = 'Choose today or later'
+    if (!form.pickupDate) {
+      newErrors.pickupDate = 'Required'
+    } else if (form.pickupDate < minPickupDate) {
+      newErrors.pickupDate = 'Choose today or later'
+    }
     if (!form.deliveryAddress.trim()) newErrors.deliveryAddress = 'Required'
     if (!form.deliveryPostcode.trim()) newErrors.deliveryPostcode = 'Required'
     if (!form.parcelSize) newErrors.parcelSize = 'Select'
@@ -112,13 +116,13 @@ export default function BookingWidget() {
       const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'Srujan.konda@infinitemetriclogistics.co.uk'
       
       const emailPayload = {
-        sender: { name: 'Infinite Metric Website', email: senderEmail },
+        sender: { name: 'Infinite Metric Logistics Website', email: senderEmail },
         to: [{ name: 'Admin', email: contactEmail }],
         subject: `New Booking Inquiry: ${bookingRef}`,
         htmlContent: `
             <div style="background-color: #fcfcfc; padding: 40px 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #000000;">
               <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #000000; padding: 40px;">
-                <h1 style="font-size: 18px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 30px; text-transform: uppercase;">Infinite Metric Limited</h1>
+                <h1 style="font-size: 18px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 30px; text-transform: uppercase;">Infinite Metric Logistics</h1>
                 
                 <p style="font-size: 14px; margin-bottom: 25px; line-height: 1.5;">A new booking enquiry has been submitted via the website. Please find the details below.</p>
                 
@@ -251,7 +255,7 @@ export default function BookingWidget() {
                   </div>
                   <div>
                     <h3 className="text-text-primary font-heading font-extrabold text-2xl tracking-tight mb-2">Quote Has Been Sent!</h3>
-                    <p className="text-text-muted font-medium text-base max-w-md mx-auto leading-relaxed">Thank you for choosing <span className="text-accent font-bold">Infinite Metric Limited</span>. Our team will review your request and contact you shortly with a personalised quote.</p>
+                    <p className="text-text-muted font-medium text-base max-w-md mx-auto leading-relaxed">Thank you for choosing <span className="text-accent font-bold">Infinite Metric Logistics</span>. Our team will review your request and contact you shortly with a personalised quote.</p>
                   </div>
                 </div>
               </MotionDiv>
@@ -321,7 +325,7 @@ export default function BookingWidget() {
                         value={form.pickupDate}
                         minDate={minPickupDate}
                         error={Boolean(errors.pickupDate)}
-                        placeholder="Pickup Date (Optional)"
+                        placeholder="Pickup Date *"
                         onChange={(value) => handleChange('pickupDate', value)}
                         className="booking-date-input"
                       />

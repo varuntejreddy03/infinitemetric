@@ -7,7 +7,7 @@ const testimonials = [
   {
     name: 'Sarah Mitchell',
     company: 'Mitchell & Co. Solicitors',
-    text: "Absolutely brilliant service. We needed urgent legal documents delivered same-day across London and Infinite Metric handled it flawlessly. They're our go-to courier now.",
+    text: "Absolutely brilliant service. We needed urgent legal documents delivered same-day across London and Infinite Metric Logistics handled it flawlessly. They're our go-to courier now.",
   },
   {
     name: 'James Henderson',
@@ -27,7 +27,7 @@ const testimonials = [
   {
     name: 'Emily Watson',
     company: 'Watson E-Commerce Ltd',
-    text: "As an e-commerce business, reliable delivery is everything. Infinite Metric's consistency and speed have helped us maintain our 5-star seller rating.",
+    text: "As an e-commerce business, reliable delivery is everything. Infinite Metric Logistics' consistency and speed have helped us maintain our 5-star seller rating.",
   },
 ]
 

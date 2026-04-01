@@ -2,8 +2,8 @@ import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
 
 export default function Footer() {
   const quickLinks = [
-    { name: 'Parcel Car', href: '#services' },
-    { name: 'Logistics Van', href: '#services' },
+    { name: 'Small Car', href: '#services' },
+    { name: 'Small Van', href: '#services' },
     { name: 'Get a Quote', href: '#booking' },
     { name: 'How It Works', href: '#how-it-works' },
   ]
@@ -36,7 +36,7 @@ export default function Footer() {
           
           {/* Brand & Contact */}
           <div className="sm:col-span-2 lg:col-span-1 space-y-5">
-            <img src="/logo.png" alt="Infinite Metric" className="h-10 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+            <img src="/logo.png" alt="Infinite Metric Logistics" className="h-10 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
             <p style={{ color: 'rgba(255,255,255,0.55)' }} className="text-sm leading-relaxed font-body max-w-xs">
               UK-based logistics company specialising in same-day and next-day delivery services nationwide.
             </p>
@@ -99,7 +99,7 @@ export default function Footer() {
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="max-w-[1280px] mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p style={{ color: 'rgba(255,255,255,0.35)' }} className="text-[11px] font-medium tracking-wide">
-            © 2026 Infinite Metric Limited. Registered in England.
+            © 2026 Infinite Metric Logistics. Registered in England.
           </p>
           <div className="flex items-center gap-6">
             <span style={{ color: 'rgba(255,255,255,0.35)' }} className="text-[11px] font-medium">Company No: 12345678</span>
