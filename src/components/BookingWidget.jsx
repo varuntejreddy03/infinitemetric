@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMapPin, FiPackage, FiPhone, FiArrowRight, FiMail, FiMessageSquare, FiNavigation, FiShield, FiCheckCircle } from 'react-icons/fi'
+import { FiMapPin, FiPackage, FiPhone, FiArrowRight, FiMail, FiMessageSquare, FiCalendar, FiNavigation, FiShield, FiCheckCircle } from 'react-icons/fi'
 
 export default function BookingWidget() {
   const [form, setForm] = useState({
@@ -19,7 +19,22 @@ export default function BookingWidget() {
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [isSending, setIsSending] = useState(false)
+  const [isIOS, setIsIOS] = useState(false)
+  const [iosPickupInputType, setIosPickupInputType] = useState('date')
   const MotionDiv = motion.div
+
+  useEffect(() => {
+    const isAppleMobile = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const isIpadDesktopMode = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1
+    const iosDevice = isAppleMobile || isIpadDesktopMode
+    setIsIOS(iosDevice)
+    if (iosDevice) setIosPickupInputType('text')
+  }, [])
+
+  useEffect(() => {
+    if (!isIOS) return
+    setIosPickupInputType(form.pickupDate ? 'date' : 'text')
+  }, [form.pickupDate, isIOS])
 
   const minPickupDate = (() => {
     const now = new Date()
@@ -315,14 +330,22 @@ export default function BookingWidget() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative group">
+                      <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10 pointer-events-none" />
                       <input
                         id="pickup-date"
-                        type="date"
+                        type={isIOS ? iosPickupInputType : 'date'}
                         aria-label="Pickup date"
+                        placeholder={isIOS ? 'Pickup Date (Optional)' : undefined}
                         min={minPickupDate}
-                        className={`booking-date-input w-full h-12 pl-4 pr-10 premium-input rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.pickupDate ? 'border-red-500 bg-red-50/20' : ''}`}
+                        className={`booking-date-input w-full h-12 pl-12 pr-4 premium-input rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.pickupDate ? 'border-red-500 bg-red-50/20' : ''}`}
                         value={form.pickupDate || ''}
                         onChange={(e) => handleChange('pickupDate', e.target.value)}
+                        onFocus={() => {
+                          if (isIOS) setIosPickupInputType('date')
+                        }}
+                        onBlur={() => {
+                          if (isIOS && !form.pickupDate) setIosPickupInputType('text')
+                        }}
                       />
                     </div>
                     <div className="relative group">
