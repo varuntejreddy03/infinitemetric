@@ -1,4 +1,4 @@
-import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
+import { FiArrowRight, FiArrowUpRight, FiHeart } from 'react-icons/fi'
 
 export default function Footer() {
   const quickLinks = [
@@ -97,14 +97,17 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="max-w-[1280px] mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p style={{ color: 'rgba(255,255,255,0.35)' }} className="text-[11px] font-medium tracking-wide">
-            © 2026 Infinite Metric Logistics. Registered in England.
-          </p>
-          <div className="flex items-center gap-6">
-            <span style={{ color: 'rgba(255,255,255,0.35)' }} className="text-[11px] font-medium">Company No: 12345678</span>
-            <span style={{ color: 'rgba(255,255,255,0.35)' }} className="text-[11px] font-medium">ISO 9001</span>
+        <div className="max-w-[1280px] mx-auto px-6 py-8 flex flex-col items-center justify-center gap-4">
+          <div style={{ color: 'rgba(255,255,255,0.9)' }} className="text-sm flex items-center justify-center gap-1.5 font-medium">
+            Made with <FiHeart className="text-[#DE3E3E] text-base" /> by 
+            <a href="https://staffarc.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity ml-1">
+              <img src="https://www.staffarc.in/images/Staffarc-logo.png" alt="StaffArc Logo" className="h-4 w-auto object-contain" />
+              <span style={{ color: '#E85D2A' }} className="font-bold tracking-wide text-base">StaffArc</span>
+            </a>
           </div>
+          <p style={{ color: 'rgba(255,255,255,0.4)' }} className="text-[12px] font-medium tracking-wide text-center">
+            © 2026 Infinite Metric Logistics. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
