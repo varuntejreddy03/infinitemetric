@@ -3,7 +3,7 @@ import { FiArrowRight } from 'react-icons/fi'
 
 const fleet = [
   {
-    title: 'Small Car',
+    title: 'Small Parcels',
     label: 'Small parcels & urgent docs',
     description: 'Rapid urban courier service for time-critical documents, small packages, and same-day deliveries across all major UK cities.',
     image: '/WhatsApp%20Image%202026-03-26%20at%207.01.50%20PM.jpeg',
@@ -42,7 +42,7 @@ export default function Services() {
               One Fleet. <br /> <span className="text-accent">Every Corner of the UK.</span>
             </motion.h2>
             <p className="text-text-muted text-lg max-w-sm font-medium font-body leading-relaxed">
-              Nationwide reach with a multi-modal fleet designed for high-velocity business demands.
+              Nationwide reach with a multi-model fleet designed for high-velocity business demands.
             </p>
           </div>
         </div>

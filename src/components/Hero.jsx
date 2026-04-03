@@ -52,7 +52,7 @@ export default function Hero() {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-white/45 max-w-[520px] text-lg sm:text-xl leading-[1.7] font-body font-medium mb-12"
             >
-              Nationwide reach with a multi-modal fleet designed for high-velocity business demands.
+              Nationwide reach with a multi-model fleet designed for high-velocity business demands.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -127,8 +127,8 @@ export default function Hero() {
                     <FiTruck className="text-white text-sm" />
                   </div>
                   <div>
-                    <h4 className="text-white font-semibold text-sm">Multi-Modal Fleet</h4>
-                    <p className="text-white/30 text-xs mt-0.5">Small cars, Small vans & heavy trucks</p>
+                    <h4 className="text-white font-semibold text-sm">Multi-Model Fleet</h4>
+                    <p className="text-white/30 text-xs mt-0.5">Small parcels, Small vans & heavy trucks</p>
                   </div>
                 </div>
               </div>

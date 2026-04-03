@@ -2,7 +2,7 @@ import { FiArrowRight, FiArrowUpRight, FiHeart } from 'react-icons/fi'
 
 export default function Footer() {
   const quickLinks = [
-    { name: 'Small Car', href: '#services' },
+    { name: 'Small Parcels', href: '#services' },
     { name: 'Small Van', href: '#services' },
     { name: 'Get a Quote', href: '#booking' },
     { name: 'How It Works', href: '#how-it-works' },

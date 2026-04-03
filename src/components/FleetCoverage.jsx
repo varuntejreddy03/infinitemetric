@@ -4,7 +4,7 @@ import { FaTruckLoading, FaTruckMoving, FaCarSide } from 'react-icons/fa'
 import { HiCheckCircle } from 'react-icons/hi'
 
 const vehicles = [
-  { name: 'Small Car', icon: <FaCarSide className="text-4xl" />, desc: 'Small parcels & urgent docs', capacity: 'Up to 20kg', color: 'from-royal via-blue-500 to-electric' },
+  { name: 'Small Parcels', icon: <FaCarSide className="text-4xl" />, desc: 'Small parcels & urgent docs', capacity: 'Up to 20kg', color: 'from-royal via-blue-500 to-electric' },
   { name: 'Small Van', icon: <FaTruckLoading className="text-4xl" />, desc: 'Large packages & boxes', capacity: 'Up to 200kg', color: 'from-royal to-navy-light' },
 ]
 

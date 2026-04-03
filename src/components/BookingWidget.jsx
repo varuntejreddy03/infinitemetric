@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMapPin, FiPackage, FiPhone, FiArrowRight, FiMail, FiMessageSquare, FiNavigation, FiShield, FiCheckCircle } from 'react-icons/fi'
+import { FiMapPin, FiPackage, FiPhone, FiArrowRight, FiMail, FiMessageSquare, FiNavigation, FiShield, FiCheckCircle, FiClock, FiHash } from 'react-icons/fi'
 import DatePicker from './DatePicker'
 
 export default function BookingWidget() {
@@ -8,14 +8,21 @@ export default function BookingWidget() {
     pickupAddress: '',
     pickupPostcode: '',
     pickupDate: '',
+    pickupTime: '',
     deliveryAddress: '',
     deliveryPostcode: '',
+    deliveryDate: '',
+    deliveryTime: '',
     distanceMiles: '',
+    collectionType: '',
+    customCollectionType: '',
+    numberOfItems: '',
     parcelSize: '',
     serviceType: 'same-day',
     phone: '',
     email: '',
     message: '',
+    agreeToTerms: false,
   })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -63,13 +70,18 @@ export default function BookingWidget() {
       `- Address: ${form.pickupAddress || 'N/A'}`,
       `- Postcode: ${form.pickupPostcode || 'N/A'}`,
       `- Date: ${form.pickupDate || 'N/A'}`,
+      `- Time: ${form.pickupTime || 'N/A'}`,
       '',
       '*3) Delivery Details*',
       `- Address: ${form.deliveryAddress || 'N/A'}`,
       `- Postcode: ${form.deliveryPostcode || 'N/A'}`,
+      `- Date: ${form.deliveryDate || 'N/A'}`,
+      `- Time: ${form.deliveryTime || 'N/A'}`,
       `- Distance: ${form.distanceMiles ? `${form.distanceMiles} Miles` : 'N/A'}`,
       '',
       '*4) Shipment Information*',
+      `- Collection Type: ${form.collectionType === 'Other' ? `Other: ${form.customCollectionType}` : form.collectionType || 'N/A'}`,
+      `- Number of Items: ${form.numberOfItems || 'N/A'}`,
       `- Parcel Size: ${form.parcelSize || 'N/A'}`,
       `- Service Type: ${form.serviceType || 'N/A'}`,
       '',
@@ -87,8 +99,18 @@ export default function BookingWidget() {
     } else if (form.pickupDate < minPickupDate) {
       newErrors.pickupDate = 'Choose today or later'
     }
+    if (!form.pickupTime) newErrors.pickupTime = 'Required'
     if (!form.deliveryAddress.trim()) newErrors.deliveryAddress = 'Required'
     if (!form.deliveryPostcode.trim()) newErrors.deliveryPostcode = 'Required'
+    if (!form.deliveryDate) newErrors.deliveryDate = 'Required'
+    if (!form.deliveryTime) newErrors.deliveryTime = 'Required'
+    if (!form.collectionType) {
+      newErrors.collectionType = 'Required'
+    } else if (form.collectionType === 'Other' && !form.customCollectionType.trim()) {
+      newErrors.collectionType = 'Specify what you are collecting'
+    }
+    if (!form.numberOfItems || isNaN(form.numberOfItems) || form.numberOfItems <= 0) newErrors.numberOfItems = 'Required'
+    if (!form.agreeToTerms) newErrors.agreeToTerms = 'Must agree'
     if (!form.parcelSize) newErrors.parcelSize = 'Select'
     if (!form.phone.trim()) {
       newErrors.phone = 'Required'
@@ -142,17 +164,22 @@ export default function BookingWidget() {
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Address:</strong> ${form.pickupAddress}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Postcode:</strong> ${form.pickupPostcode}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Date:</strong> ${form.pickupDate}</p>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Time:</strong> ${form.pickupTime}</p>
                 </div>
 
                 <div style="margin-bottom: 30px;">
                   <h3 style="font-size: 14px; text-transform: uppercase; font-weight: 900; margin-bottom: 15px; border-left: 3px solid #000000; padding-left: 10px;">3. Delivery Details</h3>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Address:</strong> ${form.deliveryAddress}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Postcode:</strong> ${form.deliveryPostcode}</p>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Date:</strong> ${form.deliveryDate}</p>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Time:</strong> ${form.deliveryTime}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Distance:</strong> ${form.distanceMiles || 'N/A'} Miles</p>
                 </div>
 
                 <div style="margin-bottom: 30px;">
                   <h3 style="font-size: 14px; text-transform: uppercase; font-weight: 900; margin-bottom: 15px; border-left: 3px solid #000000; padding-left: 10px;">4. Shipment Information</h3>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Collection Type:</strong> ${form.collectionType === 'Other' ? `Other: ${form.customCollectionType}` : form.collectionType}</p>
+                  <p style="margin: 5px 0; font-size: 14px;"><strong>Number of Items:</strong> ${form.numberOfItems}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Parcel Size:</strong> ${form.parcelSize}</p>
                   <p style="margin: 5px 0; font-size: 14px;"><strong>Service Type:</strong> ${form.serviceType}</p>
                 </div>
@@ -198,9 +225,11 @@ export default function BookingWidget() {
         setSubmitted(true)
         setTimeout(() => setSubmitted(false), 8000)
         setForm({ 
-          pickupAddress: '', pickupPostcode: '', pickupDate: '', 
-          deliveryAddress: '', deliveryPostcode: '', distanceMiles: '',
-          parcelSize: '', serviceType: 'same-day', phone: '', email: '', message: '' 
+          pickupAddress: '', pickupPostcode: '', pickupDate: '', pickupTime: '',
+          deliveryAddress: '', deliveryPostcode: '', deliveryDate: '', deliveryTime: '',
+          distanceMiles: '', collectionType: '', customCollectionType: '', numberOfItems: '',
+          parcelSize: '', serviceType: 'same-day', phone: '', email: '', message: '',
+          agreeToTerms: false
         })
       } else {
         handleWhatsAppRedirect(bookingRef, submittedDate)
@@ -331,6 +360,79 @@ export default function BookingWidget() {
                       />
                     </div>
                     <div className="relative group">
+                      <FiClock className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <select
+                        className={`w-full h-12 pl-12 pr-6 premium-input rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none appearance-none cursor-pointer ${errors.pickupTime ? 'border-red-500 bg-red-50/20' : ''}`}
+                        value={form.pickupTime}
+                        onChange={(e) => handleChange('pickupTime', e.target.value)}
+                      >
+                        <option value="" className="text-sm">Pickup Time *</option>
+                        <option value="09:00" className="text-sm py-1">09:00</option>
+                        <option value="09:30" className="text-sm py-1">09:30</option>
+                        <option value="10:00" className="text-sm py-1">10:00</option>
+                        <option value="10:30" className="text-sm py-1">10:30</option>
+                        <option value="11:00" className="text-sm py-1">11:00</option>
+                        <option value="11:30" className="text-sm py-1">11:30</option>
+                        <option value="12:00" className="text-sm py-1">12:00</option>
+                        <option value="12:30" className="text-sm py-1">12:30</option>
+                        <option value="13:00" className="text-sm py-1">13:00</option>
+                        <option value="13:30" className="text-sm py-1">13:30</option>
+                        <option value="14:00" className="text-sm py-1">14:00</option>
+                        <option value="14:30" className="text-sm py-1">14:30</option>
+                        <option value="15:00" className="text-sm py-1">15:00</option>
+                        <option value="15:30" className="text-sm py-1">15:30</option>
+                        <option value="16:00" className="text-sm py-1">16:00</option>
+                        <option value="16:30" className="text-sm py-1">16:30</option>
+                        <option value="17:00" className="text-sm py-1">17:00</option>
+                        <option value="17:30" className="text-sm py-1">17:30</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <DatePicker
+                        id="delivery-date"
+                        value={form.deliveryDate}
+                        minDate={form.pickupDate || minPickupDate}
+                        error={Boolean(errors.deliveryDate)}
+                        placeholder="Delivery Date *"
+                        onChange={(value) => handleChange('deliveryDate', value)}
+                        className="booking-date-input"
+                      />
+                    </div>
+                    <div className="relative group">
+                      <FiClock className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <select
+                        className={`w-full h-12 pl-12 pr-6 premium-input rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none appearance-none cursor-pointer ${errors.deliveryTime ? 'border-red-500 bg-red-50/20' : ''}`}
+                        value={form.deliveryTime}
+                        onChange={(e) => handleChange('deliveryTime', e.target.value)}
+                      >
+                        <option value="" className="text-sm">Delivery Time *</option>
+                        <option value="09:00" className="text-sm py-1">09:00</option>
+                        <option value="09:30" className="text-sm py-1">09:30</option>
+                        <option value="10:00" className="text-sm py-1">10:00</option>
+                        <option value="10:30" className="text-sm py-1">10:30</option>
+                        <option value="11:00" className="text-sm py-1">11:00</option>
+                        <option value="11:30" className="text-sm py-1">11:30</option>
+                        <option value="12:00" className="text-sm py-1">12:00</option>
+                        <option value="12:30" className="text-sm py-1">12:30</option>
+                        <option value="13:00" className="text-sm py-1">13:00</option>
+                        <option value="13:30" className="text-sm py-1">13:30</option>
+                        <option value="14:00" className="text-sm py-1">14:00</option>
+                        <option value="14:30" className="text-sm py-1">14:30</option>
+                        <option value="15:00" className="text-sm py-1">15:00</option>
+                        <option value="15:30" className="text-sm py-1">15:30</option>
+                        <option value="16:00" className="text-sm py-1">16:00</option>
+                        <option value="16:30" className="text-sm py-1">16:30</option>
+                        <option value="17:00" className="text-sm py-1">17:00</option>
+                        <option value="17:30" className="text-sm py-1">17:30</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="relative group">
                       <FiNavigation className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
                       <input
                         type="text"
@@ -352,7 +454,57 @@ export default function BookingWidget() {
                 </div>
 
                 <div className="space-y-4">
+                  <div className="bg-surface p-4 rounded-xl border border-border-subtle">
+                    <h4 className="text-text-primary text-sm font-bold mb-3">What are we collecting? *</h4>
+                    <div className="flex flex-col gap-2">
+                      {['Letter', 'Parcel / Bag', 'Small Box', 'Medium Box', 'Large Box', 'Other'].map((type) => (
+                        <label key={type} className="flex items-center gap-3 cursor-pointer group">
+                          <input 
+                            type="radio" 
+                            name="collectionType"
+                            value={type}
+                            checked={form.collectionType === type}
+                            onChange={(e) => handleChange('collectionType', e.target.value)}
+                            className="hidden"
+                          />
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${form.collectionType === type ? 'border-accent' : 'border-border-heavy group-hover:border-accent'}`}>
+                            {form.collectionType === type && <div className="w-2.5 h-2.5 rounded-full bg-accent" />}
+                          </div>
+                          <span className="text-sm text-text-primary font-medium">{type}</span>
+                        </label>
+                      ))}
+                    </div>
+                    
+                    {form.collectionType === 'Other' && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="mt-3"
+                      >
+                        <input
+                          type="text"
+                          placeholder="Please specify *"
+                          className={`w-full h-10 px-4 premium-input rounded-lg text-text-primary text-sm font-medium focus:border-accent outline-none ${errors.collectionType && !form.customCollectionType.trim() ? 'border-red-500 bg-red-50/20' : ''}`}
+                          value={form.customCollectionType}
+                          onChange={(e) => handleChange('customCollectionType', e.target.value)}
+                        />
+                      </motion.div>
+                    )}
+                    {errors.collectionType && <p className="text-red-500 text-xs mt-2">{errors.collectionType}</p>}
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="relative group">
+                      <FiHash className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
+                      <input
+                        type="number"
+                        placeholder="Number of items *"
+                        className={`w-full h-12 pl-12 pr-4 premium-input rounded-[10px] text-text-primary text-sm font-medium focus:border-accent transition-all outline-none ${errors.numberOfItems ? 'border-red-500 bg-red-50/20' : ''}`}
+                        value={form.numberOfItems}
+                        onChange={(e) => handleChange('numberOfItems', e.target.value)}
+                        min="1"
+                      />
+                    </div>
                     <div className="relative group">
                       <FiPackage className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
                       <select
@@ -367,6 +519,9 @@ export default function BookingWidget() {
                         <option value="pallet">Pallet Size</option>
                       </select>
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative group">
                       <FiShield className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
                       <select
@@ -380,9 +535,6 @@ export default function BookingWidget() {
                         <option value="economy">Economy 48-Hour</option>
                       </select>
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative group">
                       <FiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
                       <input
@@ -393,6 +545,9 @@ export default function BookingWidget() {
                         onChange={(e) => handleChange('phone', e.target.value)}
                       />
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4">
                     <div className="relative group">
                       <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-accent text-lg z-10" />
                       <input
@@ -419,7 +574,23 @@ export default function BookingWidget() {
             </div>
 
             <div className="flex flex-col gap-6 pt-6 border-t border-border-subtle">
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[10px] font-bold uppercase tracking-[0.15em] text-text-muted">
+              <div className="flex items-start gap-3 px-2">
+                <div className="pt-0.5">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    className="w-5 h-5 accent-accent cursor-pointer"
+                    checked={form.agreeToTerms}
+                    onChange={(e) => handleChange('agreeToTerms', e.target.checked)}
+                  />
+                </div>
+                <label htmlFor="terms" className="text-sm text-text-primary font-medium cursor-pointer select-none">
+                  Please tick if to agree to "Infinite Metric Logistics" T&C and Conditions
+                </label>
+              </div>
+              {errors.agreeToTerms && <p className="text-red-500 text-xs px-2 -mt-4">{errors.agreeToTerms}</p>}
+              
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-[10px] font-bold uppercase tracking-[0.15em] text-text-muted px-2">
                 <span>+ FULLY INSURED</span>
                 <span className="opacity-40">&middot;</span>
                 <span>+ TRACKED LIVE</span>
